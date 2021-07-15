@@ -39,6 +39,7 @@ public class ContactController {
     //public Contact findById(@PathVariable String name){
     //   return repository.findByName(name);
     //}
+    //teste git
 
     /*método para selecionar o contato pelo Nome e retornar uma lista*/
     @GetMapping(path = {"lista-nome/{name}"})
