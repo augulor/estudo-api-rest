@@ -1,6 +1,6 @@
 package CRUD.apirest;
 
-import CRUD.apirest.model.Contact;
+
 import CRUD.apirest.repository.ContactRepository;
 
 import org.springframework.boot.CommandLineRunner;
@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 
 
-import java.util.stream.LongStream;
 
 @SpringBootApplication
 @EntityScan

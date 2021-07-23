@@ -14,6 +14,17 @@ import javax.persistence.Id;
 @Data
 @Entity
 public class Contact {
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", name='" + getName() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", phone='" + getPhone() + "'" +
+            "}";
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
