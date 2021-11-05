@@ -17,7 +17,9 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
 
     Contact findByEmail(String email);
     
-    List<Contact> findByName(String name)   ;
+    List<Contact> findByName(String name);
+
+
 
     //@Query("SELECT u.username FROM User u WHERE u.username LIKE CONCAT('%',:username,'%')")
     //List<String> findUsersWithPartOfName(@Param("username") String username);
@@ -25,7 +27,7 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     @Query
     ("SELECT c FROM Contact c WHERE c.name LIKE CONCAT('%',:name,'%')")
     List<Contact> findContacts(@Param("name") String name);
-
+    
 
 }
 

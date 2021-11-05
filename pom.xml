@@ -53,7 +53,13 @@
         	<artifactId>springfox-swagger-ui</artifactId>
         	<version>3.0.0</version>
 		</dependency>
-	</dependencies>
+	
+   <dependency>
+     <groupId>commons-logging</groupId>
+     <artifactId>commons-logging</artifactId>
+     <version>1.2</version>
+   </dependency>
+ </dependencies>
 
 	<build>
 		<plugins>
