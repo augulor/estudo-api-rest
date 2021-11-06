@@ -40,10 +40,8 @@ public class ContactController {
 
     /*método para selecionar o contato pelo id*/
     @GetMapping(path = {"/{id}"})
-    public ResponseEntity<?> findById(@PathVariable long id){
-        if(!repository.existsById(id))
-            throw new ResourceNotFoundException("Not found id: "+id);
-                        
+    public ResponseEntity<?> findById(@PathVariable Long id){
+        VerifyIdExists(id);
         return new ResponseEntity<>(repository.findById(id), HttpStatus.OK);    
       //return repository.findById(id)
       //      .map(record -> ResponseEntity.ok().body(record))
@@ -76,8 +74,9 @@ public class ContactController {
 
     /*método para atualizar um contato existente na base*/
     @PutMapping(value="/update/{id}")
-    public ResponseEntity update(@PathVariable("id") long id,
+    public ResponseEntity<?> update(@PathVariable("id") Long id,
                                  @RequestBody Contact contact) {
+                                 VerifyIdExists(id);
         return repository.findById(id)
                 .map(record -> {
                     record.setName(contact.getName());
@@ -90,12 +89,19 @@ public class ContactController {
 
     /*método para apagar um contanto da base*/
     @DeleteMapping(path ={"/delete/{id}"})
-    public ResponseEntity <?> delete(@PathVariable long id) {
+    public ResponseEntity <?> delete(@PathVariable Long id) {
+        VerifyIdExists(id);
         return repository.findById(id)
                 .map(record -> {
                     repository.deleteById(id);
                     return ResponseEntity.ok().build();
                 }).orElse(ResponseEntity.notFound().build());
+    }
+
+    /**Metodo de validação para tratar retorno 404 para requisições com ID */
+    private void VerifyIdExists(Long id) {
+        if(!repository.existsById(id))
+            throw new ResourceNotFoundException("A chave utilizada não existe na entidade de Contatos - Id: "+id);
     }
 
 }
