@@ -35,13 +35,14 @@ public class ContactController {
     /*método para selecionar todos os contatos */
     @RequestMapping("/all")
     public List<Contact> findAll(){
+        verifyAllExists();
         return repository.findAll();
     }
 
     /*método para selecionar o contato pelo id*/
     @GetMapping(path = {"/{id}"})
     public ResponseEntity<?> findById(@PathVariable Long id){
-        VerifyIdExists(id);
+        verifyIdExists(id);
         return new ResponseEntity<>(repository.findById(id), HttpStatus.OK);    
       //return repository.findById(id)
       //      .map(record -> ResponseEntity.ok().body(record))
@@ -76,7 +77,8 @@ public class ContactController {
     @PutMapping(value="/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id,
                                  @RequestBody Contact contact) {
-                                 VerifyIdExists(id);
+                                 verifyIdExists(id);
+                                 System.out.println(contact.toString());
         return repository.findById(id)
                 .map(record -> {
                     record.setName(contact.getName());
@@ -90,7 +92,7 @@ public class ContactController {
     /*método para apagar um contanto da base*/
     @DeleteMapping(path ={"/delete/{id}"})
     public ResponseEntity <?> delete(@PathVariable Long id) {
-        VerifyIdExists(id);
+        verifyIdExists(id);
         return repository.findById(id)
                 .map(record -> {
                     repository.deleteById(id);
@@ -99,9 +101,15 @@ public class ContactController {
     }
 
     /**Metodo de validação para tratar retorno 404 para requisições com ID */
-    private void VerifyIdExists(Long id) {
+    private void verifyIdExists(Long id) {
         if(!repository.existsById(id))
             throw new ResourceNotFoundException("A chave utilizada não existe na entidade de Contatos - Id: "+id);
+    }
+
+    private void verifyAllExists(){
+        if(repository.count()  <= 0){
+            throw new ResourceNotFoundException("A lista de contatos esta vazia!");
+        }
     }
 
 }
